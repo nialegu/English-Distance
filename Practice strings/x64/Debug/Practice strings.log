@@ -1,2 +1,3 @@
-﻿  main.cpp
-  Practice strings.vcxproj -> C:\Users\Leonid\Projects\Practice strings\x64\Debug\Practice strings.exe
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (Practice strings.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  main.cpp
+  Practice strings.vcxproj -> C:\Users\Leonid\Projects\Distance\x64\Debug\Distance.exe

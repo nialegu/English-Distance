@@ -9,7 +9,7 @@ private:
 	float inches;
 public:
 	Distance() : feet(0), inches(0.0), mtf(3.280833F) {}
-	Distance(float meters) : mtf(3.280833F) {
+	explicit Distance(float meters) : mtf(3.280833F) {
 		float fltfeet = mtf * meters;
 		feet = int(fltfeet);
 		inches = 12 * (fltfeet - feet);
@@ -37,6 +37,9 @@ public:
 };
 
 int main() {
+	void fancyDist(Distance);
+
+
 	Distance d1, d3, d4;
 	d1.get_dist();
 	Distance d2(11, 6.25);
@@ -54,17 +57,26 @@ int main() {
 	cout << "\nd1 now: "; d1.show_dist();
 
 	float mtrs;
-	Distance d5 = 2.35F;
-	
+	Distance d5(2.35F);
+	//Distance d5 = 2.35F; - it's incorrect now cause we added "explicit"
 	cout << "\nd5 = "; d5.show_dist();
 	mtrs = static_cast<float>(d5);
 	cout << "d5 = " << mtrs << " meters " << endl;
 	mtrs = d1;
 	cout << "d1 = " << mtrs << " meters " << endl;
 
+	//fancyDist(mtrs); - without "explicit" this thing works
+
 	return 0;
 }
 
+void fancyDist(Distance d) {
+	cout << "In feet and inches: ";
+	d.show_dist();
+	cout << endl;
+}
+
+//transform to meters
 Distance::operator float()const {
 	float fracfeet = inches / 12;
 	fracfeet += static_cast<float>(feet);

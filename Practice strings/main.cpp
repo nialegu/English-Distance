@@ -27,6 +27,7 @@ public:
 	}
 
 	Distance operator+ (Distance) const;
+	Distance operator- (Distance) const;
 	bool operator< (Distance) const;
 	void operator+=(Distance);
 	operator float()const;
@@ -64,9 +65,13 @@ int main() {
 	cout << "d5 = " << mtrs << " meters " << endl;
 	mtrs = d1;
 	cout << "d1 = " << mtrs << " meters " << endl;
-
 	//fancyDist(mtrs); - without "explicit" this thing works
-
+	cout << endl;
+	Distance d6, d7, d8;
+	d6.get_dist();
+	d7.get_dist();
+	d8 = d7 - d6;
+	d8.show_dist();
 	return 0;
 }
 
@@ -96,6 +101,23 @@ bool Distance::operator<(Distance d2) const {
 	float bf1 = feet + inches / 12;
 	float bf2 = d2.feet + d2.inches / 12;
 	return(bf1 < bf2) ? true : false;
+}
+
+Distance Distance::operator-(Distance d2) const {
+	int f; float i;
+	if ((feet - d2.feet) < 0 || ( (feet - d2.feet) == 0 && (inches - d2.inches) < 0 )) {
+		cout << "Getting negative value! ";
+		return Distance(0, 0);
+	}
+	else {
+		f = feet - d2.feet;
+		i = inches - d2.inches;
+		if (i < 0) {
+			i = 12 - i * (-1);
+			f--;
+		}
+		return Distance(f, i);
+	}
 }
 
 Distance Distance::operator+(Distance d2) const {

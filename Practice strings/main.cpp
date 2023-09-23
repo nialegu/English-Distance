@@ -3,7 +3,7 @@
 using namespace std;
 
 class Distance {
-private:
+protected:
 	const float mtf;
 	int feet;
 	float inches;
@@ -19,7 +19,6 @@ public:
 	void get_dist() {
 		cout << "Enter feet: "; cin >> feet;
 		cout << "Enter inches: "; cin >> inches;
-		cout << endl;
 	}
 
 	void show_dist() {
@@ -37,41 +36,74 @@ public:
 	}
 };
 
+class DistSign : public Distance {
+private:
+	char sign;
+public:
+	DistSign() : Distance() {
+		sign = '+';
+	}
+	DistSign(int ft, float in) : Distance(ft, in) {
+		sign = '+';
+	}
+	DistSign(int ft, float in, char sg) : Distance(ft, in) {
+		sign = sg;
+	}
+
+	void get_dist() {
+		Distance::get_dist();
+		cout << "Enter the sign (+ or -): "; cin >> sign;
+	}
+	void show_dist() {
+		cout << sign;
+		Distance::show_dist();
+	}
+};
+
 int main() {
-	void fancyDist(Distance);
+	DistSign alpha;
+	alpha.get_dist();
 
+	DistSign beta(11, 6.25);
+	DistSign gamma(100, 5.5, '-');
 
-	Distance d1, d3, d4;
-	d1.get_dist();
-	Distance d2(11, 6.25);
+	alpha.show_dist();
+	beta.show_dist();
+	gamma.show_dist();
+	
+	//void fancyDist(Distance);
+	//Distance d1, d3, d4;
+	//d1.get_dist();
+	//Distance d2(11, 6.25);
 
-	d3 = d1 + d2;
-	d4 = d1 + d2 + d3;
-	cout << "d1 = "; d1.show_dist();
-	cout << "d2 = "; d2.show_dist();
-	cout << "d3 = "; d3.show_dist();
-	cout << "d4 = "; d4.show_dist();
+	//d3 = d1 + d2;
+	//d4 = d1 + d2 + d3;
+	//cout << "d1 = "; d1.show_dist();
+	//cout << "d2 = "; d2.show_dist();
+	//cout << "d3 = "; d3.show_dist();
+	//cout << "d4 = "; d4.show_dist();
 
-	if (d1 < d2) cout << "\nd1 is smaller than d2" << endl;
-	else cout << "\nd1 is bigger or equal to d2" << endl;
-	d1 += d2;
-	cout << "\nd1 now: "; d1.show_dist();
+	//if (d1 < d2) cout << "\nd1 is smaller than d2" << endl;
+	//else cout << "\nd1 is bigger or equal to d2" << endl;
+	//d1 += d2;
+	//cout << "\nd1 now: "; d1.show_dist();
 
-	float mtrs;
-	Distance d5(2.35F);
-	//Distance d5 = 2.35F; - it's incorrect now cause we added "explicit"
-	cout << "\nd5 = "; d5.show_dist();
-	mtrs = static_cast<float>(d5);
-	cout << "d5 = " << mtrs << " meters " << endl;
-	mtrs = d1;
-	cout << "d1 = " << mtrs << " meters " << endl;
-	//fancyDist(mtrs); - without "explicit" this thing works
-	cout << endl;
-	Distance d6, d7, d8;
-	d6.get_dist();
-	d7.get_dist();
-	d8 = d7 - d6;
-	d8.show_dist();
+	//float mtrs;
+	//Distance d5(2.35F);
+	////Distance d5 = 2.35F; - it's incorrect now cause we added "explicit"
+	//cout << "\nd5 = "; d5.show_dist();
+	//mtrs = static_cast<float>(d5);
+	//cout << "d5 = " << mtrs << " meters " << endl;
+	//mtrs = d1;
+	//cout << "d1 = " << mtrs << " meters " << endl;
+	////fancyDist(mtrs); - without "explicit" this thing works
+	//cout << endl;
+	//Distance d6, d7, d8;
+	//d6.get_dist();
+	//d7.get_dist();
+	//d8 = d7 - d6;
+	//d8.show_dist();
+
 	return 0;
 }
 

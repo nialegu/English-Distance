@@ -1,6 +1,26 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
+void one_line();
+
+class Type {
+private:
+	string dimensions;
+	string grade;
+public:
+	Type() : dimensions("N/A"), grade("N/A") {}
+	Type(string di, string gr) : dimensions(di), grade(gr) {}
+	
+	void get_type() {
+		cout << "Enter nominal sizes (for example 2x4): "; getline(cin, dimensions);
+		cout << "Enter a grade: "; getline(cin, grade);
+	}
+	void show_type() const {
+		cout << "Nominal sizes: " << dimensions << endl;
+		cout << "Grade: " << grade << endl;
+	}
+};
 
 class Distance {
 protected:
@@ -60,57 +80,39 @@ public:
 	}
 };
 
+class Lumber : public Type, public Distance {
+private:
+	int quantity;
+	double price;
+public:
+	Lumber() : Type(), Distance(), quantity(0), price(0.0) {}
+	Lumber(string di, string gr,
+			int ft, float in,
+			int qu, double pr) :
+		Type(di, gr), Distance(ft, in), quantity(qu), price(pr) {}
+
+	void get_lumber() {
+		Type::get_type(); Distance::get_dist();
+		cout << "Enter quantity: "; cin >> quantity;
+		cout << "Enter price: "; cin >> price;
+		one_line();
+	}
+	void show_lumber() {
+		Type::show_type(); 
+		cout << "Size: "; Distance::show_dist();
+		cout << "Price of " << quantity << " pieces: " << price*quantity << " dollars" << endl;
+		one_line();
+	}
+};
+
 int main() {
-	DistSign alpha;
-	alpha.get_dist();
-
-	DistSign beta(11, 6.25);
-	DistSign gamma(100, 5.5, '-');
-
-	alpha.show_dist();
-	beta.show_dist();
-	gamma.show_dist();
-	
-	//void fancyDist(Distance);
-	//Distance d1, d3, d4;
-	//d1.get_dist();
-	//Distance d2(11, 6.25);
-
-	//d3 = d1 + d2;
-	//d4 = d1 + d2 + d3;
-	//cout << "d1 = "; d1.show_dist();
-	//cout << "d2 = "; d2.show_dist();
-	//cout << "d3 = "; d3.show_dist();
-	//cout << "d4 = "; d4.show_dist();
-
-	//if (d1 < d2) cout << "\nd1 is smaller than d2" << endl;
-	//else cout << "\nd1 is bigger or equal to d2" << endl;
-	//d1 += d2;
-	//cout << "\nd1 now: "; d1.show_dist();
-
-	//float mtrs;
-	//Distance d5(2.35F);
-	////Distance d5 = 2.35F; - it's incorrect now cause we added "explicit"
-	//cout << "\nd5 = "; d5.show_dist();
-	//mtrs = static_cast<float>(d5);
-	//cout << "d5 = " << mtrs << " meters " << endl;
-	//mtrs = d1;
-	//cout << "d1 = " << mtrs << " meters " << endl;
-	////fancyDist(mtrs); - without "explicit" this thing works
-	//cout << endl;
-	//Distance d6, d7, d8;
-	//d6.get_dist();
-	//d7.get_dist();
-	//d8 = d7 - d6;
-	//d8.show_dist();
+	Lumber siding;
+	siding.get_lumber();
+	Lumber studs("2x4", "const", 8, 0.0, 200, 4.45);
+	cout << "First\n\n"; siding.show_lumber();
+	cout << "Second\n\n"; studs.show_lumber();
 
 	return 0;
-}
-
-void fancyDist(Distance d) {
-	cout << "In feet and inches: ";
-	d.show_dist();
-	cout << endl;
 }
 
 //transform to meters
@@ -159,4 +161,11 @@ Distance Distance::operator+(Distance d2) const {
 		f++; i -= 12;
 	}
 	return Distance(f, i);
+}
+
+void one_line() {
+	for (int i = 0; i < 45; i++) {
+		cout << "-";
+	}
+	cout << endl;
 }
